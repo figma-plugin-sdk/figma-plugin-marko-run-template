@@ -1,0 +1,19 @@
+{
+  "name": "figma-plugin-marko-run-template",
+  "description": "The default Marko starter app with TypeScript",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "marko": "^5.31.17"
+  },
+  "devDependencies": {
+    "@marko/run": "^0.3.0"
+  },
+  "private": true,
+  "scripts": {
+    "dev": "marko-run",
+    "build": "marko-run build",
+    "preview": "marko-run preview",
+    "start": "node --enable-source-maps ./dist/index.mjs"
+  }
+}
