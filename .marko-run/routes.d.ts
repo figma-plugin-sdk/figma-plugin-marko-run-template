@@ -8,9 +8,12 @@ import type Run from "@marko/run";
 
 
 declare module "@marko/run" {
+	interface Platform extends {} {}
+
 	interface AppData extends Run.DefineApp<{
 		routes: {
 			"/": Routes["/_index"];
+			"/about": Routes["/about"];
 		}
 	}> {}
 }
@@ -25,13 +28,23 @@ declare module "../src/routes/_index/+page.marko" {
   }
 }
 
+declare module "../src/routes/about+page.marko" {
+  namespace MarkoRun {
+    export { NotHandled, NotMatched, GetPaths, PostPaths, GetablePath, GetableHref, PostablePath, PostableHref, Platform };
+    export type Route = Run.Routes["/about"];
+    export type Context = Run.MultiRouteContext<Route> & Marko.Global;
+    export type Handler = Run.HandlerLike<Route>;
+    export const route: Run.HandlerTypeFn<Route>;
+  }
+}
+
 declare module "../src/routes/+layout.marko" {
   export interface Input {
     renderBody: Marko.Body;
   }
   namespace MarkoRun {
     export { NotHandled, NotMatched, GetPaths, PostPaths, GetablePath, GetableHref, PostablePath, PostableHref, Platform };
-    export type Route = Run.Routes["/"];
+    export type Route = Run.Routes["/" | "/about"];
     export type Context = Run.MultiRouteContext<Route> & Marko.Global;
     export type Handler = Run.HandlerLike<Route>;
     export const route: Run.HandlerTypeFn<Route>;
@@ -40,4 +53,5 @@ declare module "../src/routes/+layout.marko" {
 
 type Routes = {
 	"/_index": { verb: "get"; meta: typeof import("../src/routes/_index/+meta.json"); };
+	"/about": { verb: "get"; };
 }
